@@ -5,7 +5,7 @@ import codecs, os, sys
 #from nltk import FreqDist
 from collections import Counter
 
-txtfile = "schlag.txt"
+txtfile = sys.argv[2]
 f = codecs.open(txtfile, encoding='utf-8')
 #schlaglist = 
 bigCnt = Counter([x.strip() for x in f])
@@ -36,8 +36,8 @@ except:
     print "error", i
 
 print bigCnt.most_common(20)
-with codecs.open("answers.csv", "w", "utf-8") as f:
-    for word,num in sorted(bigCnt.most_common(20)):
+with codecs.open("answers.csv", "a", "utf-8") as f:
+    for word,num in sorted(bigCnt.most_common(11)):
         f.write(word)
         f.write(",")
         f.write(str(num).encode("utf-8"))
