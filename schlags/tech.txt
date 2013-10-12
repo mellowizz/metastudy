@@ -1,0 +1,12 @@
+Windenergie
+Photovoltaik
+Biogas
+Biomasse
+Energiepflanzen
+Wasserkraft
+Geothermie
+Kraft-Wärme-Kopplung
+Pumpspeicherkraftwerk
+Energiespeicher
+Effizienz
+Suffizienz
