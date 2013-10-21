@@ -13,7 +13,7 @@ TO DO:
 '''
 
 import codecs
-from pattern.web    import Google, plaintext, sort
+from pattern.web import Google, plaintext, sort
 from optparse import OptionParser
 
 parser = OptionParser()
@@ -21,23 +21,26 @@ parser.add_option("-q", "--query", dest="query",
                   help="txt file with searchwords")
 parser.add_option("-f", "--filename", dest="filename",
                   help="specify filename to save data too")
+parser.add_option("-c", "--context", dest="context",
+                  help="specify context for search")
 (options, args) = parser.parse_args()
 
 # open the list of query words
 f = codecs.open(options.query, encoding='utf-8')
-
 # build results in context of the "Energiewende"
-results = sort(terms=[x.strip() for x in f], context = 'Energiewende')
+results = sort(terms=[x.strip() for x in f], context = options.context)
 
 # create weights
-for weight, term in results:
-    term = term.encode('utf-8')
-    with codecs.open(options.filename, "a", "utf-8") as f:
-        print ("%5.2f" % (weight * 100) + '%', repr(term))
-        try:
-            f.write(term.encode("utf-8"))
-            f.write(',')
-            f.write("%5.2f" % (weight * 100))
-            f.write('\n')
-        except UnicodeDecodeError as e:
-            print e
+if results.count() > 0:
+     for weight, term in results:
+     #term = term.encode('utf-8') <-- needed?
+         with codecs.open(options.filename, "a", "utf-8") as f:
+            try:
+                 f.write(term.encode("utf-8"))
+                 f.write(',')
+                 f.write("%5.2f" % (weight * 100))
+                 f.write('\n')
+             except UnicodeDecodeError as e:
+                 print e
+else:
+    print "No results. Sorry."
